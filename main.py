@@ -23,6 +23,18 @@ async def predict(file: UploadFile = File(...)) -> dict:
     else:
         return JSONResponse(content={'error': 'El archivo no es una imagen'}, status_code=400)
 
+@app.post('/predict-bytes')
+def predict_bytes(data: bytes = File(...)) -> dict:
+    print(f"data {data}")
+    if data.startswith('image/'):
+        image = Image.open(io.BytesIO(data))
+        image = np.array(image)
+        results = make_prediction(model, image)
+
+        return JSONResponse(content={'results': results})
+    else:
+        return JSONResponse(content={'error': 'El archivo no es una imagen'}, status_code=400)
+
 
 if __name__ == "__main__":
     import uvicorn

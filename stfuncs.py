@@ -1,5 +1,11 @@
 import streamlit as st
-import time
+import requests
+# from cv2 import imencode
+import io
+import base64
+from PIL import Image
+import numpy as np
+from modelo.model import create_model, make_prediction
 
 def presentacion(placeholder):
     #with placeholder.container():
@@ -41,13 +47,15 @@ desde la toma de radiografía que no se limite a informar entre Normal y Neumoni
         st.subheader("Alcance actual")
         st.text("* Complicaciones con procesamiento")
         st.text("* Se entrena el modelo solo con 600 imagenes")
-        st.text("* Precision del 80 %")
+        st.text("* Precision del 76 %")
 
         st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
 
     with tab3:#Metodología
         st.subheader("Datos usados")
-        st.image("imagenes/distribucion_datos.png", width=400)
+        st.text("* 600 imagenes")
+        st.image("imagenes/distribucion_datos.png", width=500)
+
         st.subheader("Procesamiento de las imagenes")
         st.text("* Ajuste de dimensiones")
         st.text("* Ecualización del histograma")
@@ -72,14 +80,18 @@ desde la toma de radiografía que no se limite a informar entre Normal y Neumoni
         
         st.subheader("Red Neuronal Convolucional (CNN)")
         st.text("* 3 capas convolucionales")
-        st.text("* 3 capas de reduccion de dimensionalidad")
+        st.text("* 3 capas de reducción de dimensionalidad")
         st.text("* 1 capa de aplanado")
         st.text("* 1 capa densa")
         st.text("* 1 capa de salida de categorias")
     
     with tab4:#Resultados
         st.subheader("Precisión")
+        st.text("* Precisión 76% en el conjunto de pruebas.")
         st.image("imagenes/graficas_de_entrenamiento.png", width=600)
+
+        st.subheader("Matriz de confusión")
+        st.image("imagenes/matriz_confusion.png", width=600)
     
     with tab5:#Proximas acciones
         st.subheader("Siguientes fases")
@@ -95,9 +107,44 @@ def prediciones(placeholder):
     placeholder.title("Predicciones")
     uploaded_file = st.file_uploader("Elige una imagen :floppy_disk:")
     if uploaded_file is not None:
+        print(f"uploaded {type(uploaded_file)}")
+        print(f"uploaded {uploaded_file.__dict__}")
         st.image(uploaded_file, caption=f'{uploaded_file.name}')
-        st.button("Realiza prediccion", on_click=make_request, args=[uploaded_file,])
+        #st.button("Realiza prediccion", on_click=predice, args=[uploaded_file,])
+        if st.button("Realiza prediccion"):
+            predice(uploaded_file)
 
 def make_request(image):
     st.text("haciendo request")
-    
+    # Request parameters
+    url = "http://0.0.0.0:8000/predict"
+    headers = {'Content-Type': 'image/jpeg'}
+    headers = {'Content-Type': 'application/octet-stream'}
+    #payload = {'date': date, 'hour': hour, 'imperfection_type': imperfection_id, 'machine': self._machine_id}
+    # Sending request
+    #bytes_data = imencode('.jpeg', image)[1]
+    #bytes_image = io.BytesIO(image)
+    bytes_data = image.getvalue()
+    print(f"bytes_data {type(image.getvalue())}")
+    img_bytes = io.BytesIO(bytes_data)
+    # file=image.name;type=image/jpeg'
+    #files = [('images', (image.name, bytes_data, 'image/jpeg'))]
+    ##response = requests.post(url=url, headers=headers, data=bytes_data)
+    #files = {"file": image}
+    files = {"file": (image.name, img_bytes, "multipart/form-data")}
+    #response = requests.post(url, files=files)
+    encoded_image = base64.b64encode(bytes_data).decode('utf-8') 
+
+    # Enviar la imagen a la API
+    headers = {'Content-Type': 'application/json'}
+    data = {'image': encoded_image}
+    response = requests.post(url, json=data, headers=headers)
+    st.write(response)
+
+path = "pesos/model.h5"
+model = create_model(path)
+def predice(image):
+    image = Image.open(io.BytesIO(image.getvalue()))
+    image = np.array(image)
+    result = make_prediction(model, image)
+    st.subheader(f"Resultado: {result}")

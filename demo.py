@@ -1,9 +1,11 @@
 import streamlit as st
 import time
 from stfuncs import presentacion, prediciones
+
 if __name__ == '__main__':
+
     placeholder = st.empty()
-    placeholder.title("Demo Clasificación de Neumonia")
+    placeholder.title("Demo Clasificación de Neumonía")
     placeholder2 = st.empty()
     sidebar = st.sidebar
     sidebar.header("Menú")
