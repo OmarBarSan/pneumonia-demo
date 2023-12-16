@@ -2,11 +2,28 @@
 
 Este es un repositorio demo de clasificación de imagenes radiograficas para detección de neumonia
 
-
 ## El problema
 
+En la actualidad el tiempo requerido por un especialista para realizar analisis
+de una radiografía para identificar neumonia es de 20 minutos.
+Aunque considerando la carga de trabajo y el hecho de que los pacientes
+deberan agendar cita hasta tener un resultado (por lo menos en Mexico asi es),
+este tiempo aumenta y en los casos donde el resultado es positivo,
+este tiempo puede significar la posibilidad de salvar una vida.
+
 <img src="imagenes/person_bacteria.jpeg" width="600">
+
+El tiempo medio desde los primeros síntomas
+hasta el inicio de la disnea es de 5-8 días.
+Esto sumado con el tiempo de atención, toma y entrega de resultados se puede elevar con facilidad a mas de 15 días.
+En este tiempo el paciente podria empezar a presentar falla organica.
+
 <img src="imagenes/evolucion.jpeg" width="600">
+
+## La propuesta
+
+Por lo descrito en la sección anterior se pretende generar un sistema de consulta rapida que advierta a los medicos
+desde la toma de radiografía que no se limite a informar entre Normal y Neumonia.
 
 ## Objetivos
 
