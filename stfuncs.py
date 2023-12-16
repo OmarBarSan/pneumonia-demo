@@ -24,7 +24,7 @@ este tiempo aumenta y en los casos donde el resultado es positivo,
 este tiempo puede significar la posibilidad de salvar una vida.""")
         #st.text("este tiempo aumenta y en los casos donde el resultado es positivo,")
         #st.text("este tiempo puede significar la posibilidad de salvar una vida.")
-        st.image("imagenes/person1_bacteria_1.jpeg", width=600)
+        st.image("imagenes/person_bacteria.jpeg", width=600)
 
         st.subheader("Complicación en pocos días")
         st.text(
@@ -56,7 +56,7 @@ desde la toma de radiografía que no se limite a informar entre Normal y Neumoni
         st.text("* Se entrena el modelo solo con 600 imagenes")
         st.text("* Precision del 76 %")
 
-        st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+        st.image("imagenes/clases_otros.png", width=600)
 
     with tab3:#Metodología
         st.subheader("Datos usados")
