@@ -40,10 +40,17 @@ desde la toma de radiografía que no se limite a informar entre Normal y Neumoni
     with tab2:#Objetivos
         st.subheader("Creación de API de consultas")
         st.text("Realizar clasificación de 3 categorias:")
-        st.text("* Normal")
-        st.text("* Bacteria")
-        st.text("* Virus")
-        st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+        col1,col2,col3 =st.columns(3)
+        with col1:
+            st.text("* Normal")
+            st.image("imagenes/normal.jpeg", width=200)
+        with col2:
+            st.text("* Bacteria")
+            st.image("imagenes/bacteria.jpeg", width=200)
+        with col3:
+            st.text("* Virus")
+            st.image("imagenes/virus.jpeg", width=200)
+
         st.subheader("Alcance actual")
         st.text("* Complicaciones con procesamiento")
         st.text("* Se entrena el modelo solo con 600 imagenes")
