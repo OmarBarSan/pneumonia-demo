@@ -1,11 +1,12 @@
-from fastapi import FastAPI, Request, File, UploadFile
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from PIL import Image
 import io
+import numpy as np
 
 from modelo.model import create_model, make_prediction
 
-path = "pesos"
+path = "pesos/model.h5"
 model = create_model(path)
 app = FastAPI()
 
@@ -15,6 +16,7 @@ async def predict(file: UploadFile = File(...)) -> dict:
     if file.content_type.startswith('image/'):
         contents = await file.read()
         image = Image.open(io.BytesIO(contents))
+        image = np.array(image)
         results = make_prediction(model, image)
 
         return JSONResponse(content={'results': results})
