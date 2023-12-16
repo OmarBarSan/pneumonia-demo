@@ -27,15 +27,23 @@ desde la toma de radiografía que no se limite a informar entre Normal y Neumoni
 
 ## Objetivos
 
+Realizar un clasificador de imagenes de tres categorias Normal, Bacteria y Virus, usando redes neuronales convolucionales.
+
 <img src="imagenes/normal.jpeg" width="200">
 <img src="imagenes/bacteria.jpeg" width="200">
 <img src="imagenes/virus.jpeg" width="200">
+
+En otros proyectos es posible encontrar clasificadores binarios entre Normal y Neumonia, pero iremos mas lejos para mejorar esa capacidad.
+
+Se crea una demo en streamlit que permite realizar predicciones de imagenes almacenadas en nuestro pc
+
 <img src="imagenes/clases_otros.png" width="600">
 
 ## Metodología
 ### Los datos utilizados
 
 Los datos utilizados para este entrenamiento han sido de solo 600 imagenes clasificadas como Norma, Bacteria y Virus.
+
 Se procuró que la cantidad de datos estuviera balanceada entre las  tres categorías.
 
 <img src="imagenes/distribucion_datos.png" width="500">
